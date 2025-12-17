@@ -18,7 +18,7 @@
         VALUES (#{username}, #{password}, #{role})
     </insert>
 
-    <select id="getUserByUsername" parameterType="String" resultMap="UserResultMap">
+    <select id="selectUserByUsername" parameterType="String" resultMap="UserResultMap">
         SELECT user_id, username, password, role, created_at
         FROM users
         WHERE username = #{username}

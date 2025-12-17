@@ -26,7 +26,7 @@ public class AuthController {
             HttpSession session
     ) {
         User loginUser = userService.login(user.getUsername(), user.getPassword());
-        session.setAttribute("user", loginUser);
+        session.setAttribute("loginUser", loginUser);
         return Result.success("用户" + user.getUsername() + "登录成功", loginUser);
     }
     
