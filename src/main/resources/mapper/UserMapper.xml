@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.maijianda.cloud_library.mapper.UserMapper">
+
+    <resultMap id="UserResultMap" type="com.maijianda.cloud_library.entity.User">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id ="insertUser" parameterType="com.maijianda.cloud_library.entity.User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users (username, password, role)
+        VALUES (#{username}, #{password}, #{role})
+    </insert>
+
+    <select id="getUserByUsername" parameterType="String" resultMap="UserResultMap">
+        SELECT user_id, username, password, role, created_at
+        FROM users
+        WHERE username = #{username}
+    </select>
+    
+    <select id="selectByConditions" parameterType="com.maijianda.cloud_library.entity.User" resultMap="UserResultMap">
+        SELECT *
+        FROM users
+        <where>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="role != null and role != ''">
+                AND role = #{role}
+            </if>
+        </where>
+        ORDER BY created_at DESC
+    </select>
+
+</mapper>
