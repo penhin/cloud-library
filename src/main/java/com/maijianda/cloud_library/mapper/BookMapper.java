@@ -3,6 +3,9 @@ package com.maijianda.cloud_library.mapper;
 import com.maijianda.cloud_library.entity.Book;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface BookMapper {
        
     int insert(Book book);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.maijianda.cloud_library.mapper.BorrowMapper">
+
+    <resultMap id="BorrowResultMap" type="com.maijianda.cloud_library.entity.Borrow">
+        <id property="borrowId" column="borrow_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="bookId" column="book_id"/>
+        <result property="borrowTime" column="borrow_time"/>
+        <result property="returnTime" column="return_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <insert id ="insert" useGeneratedKeys="true" keyProperty="borrowId">
+        INSERT INTO borrows (user_id, book_id, borrow_time, status)
+        VALUES (#{userId}, #{bookId}, NOW(), #{status})
+    </insert>
+    
+    <update id="updateStatus">
+        UPDATE borrows
+        SET status = #{status},
+            return_time = CASE
+                WHEN #{status} = 'RETURNED' THEN NOW()
+                ELSE return_time
+            END
+        WHERE borrow_id = #{borrowId}
+    </update>
+
+    <select id="selectById" resultMap="BorrowResultMap">
+        SELECT * FROM borrows WHERE borrow_id = #{borrowId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BorrowResultMap">
+        SELECT * FROM borrows
+        WHERE user_id = #{userId}
+        ORDER BY borrow_time DESC
+    </select>
+
+    <select id="selectAll" resultMap="BorrowResultMap">
+        SELECT * FROM borrows
+        ORDER BY borrow_time DESC
+    </select>   
+
+</mapper>

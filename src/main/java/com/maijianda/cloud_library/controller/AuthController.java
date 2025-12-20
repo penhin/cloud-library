@@ -17,7 +17,7 @@ public class AuthController {
     @PostMapping("/register")
     public Result<Void> register(@RequestBody User user) {
         userService.register(user);
-        return Result.success("用户" + user.getUsername() + "注册成功", null);
+        return Result.success("注册成功", null);
     }
     
     @PostMapping("/login")
@@ -27,13 +27,13 @@ public class AuthController {
     ) {
         User loginUser = userService.login(user.getUsername(), user.getPassword());
         session.setAttribute("loginUser", loginUser);
-        return Result.success("用户" + user.getUsername() + "登录成功", loginUser);
+        return Result.success("登录成功", loginUser);
     }
     
     @PostMapping("/logout")
     public Result<Void> logout(HttpSession session) {
         session.invalidate();
-        return Result.success("用户注销成功", null);
+        return Result.success("注销成功", null);
     }
     
     @GetMapping("/me")
