@@ -1,5 +1,6 @@
 package com.maijianda.cloud_library.controller;
 
+import com.maijianda.cloud_library.annotation.RequireRole;
 import com.maijianda.cloud_library.common.Result;
 import com.maijianda.cloud_library.entity.Book;
 import com.maijianda.cloud_library.service.BookService;
@@ -15,18 +16,21 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @RequireRole("ADMIN")
     @PostMapping
     public Result<Void> add(@RequestBody Book book) {
         bookService.addBook(book);
         return Result.success("新增图书成功", null);
     }
 
+    @RequireRole("ADMIN")
     @PutMapping
     public Result<Void> update(@RequestBody Book book) {
         bookService.updateBook(book);
         return Result.success("更新图书成功", null);
     }
 
+    @RequireRole("ADMIN")
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id) {
         bookService.deleteBook(id);

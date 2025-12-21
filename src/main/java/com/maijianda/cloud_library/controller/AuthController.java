@@ -1,5 +1,6 @@
 package com.maijianda.cloud_library.controller;
 
+import com.maijianda.cloud_library.annotation.RequireRole;
 import com.maijianda.cloud_library.common.Result;
 import com.maijianda.cloud_library.entity.User;
 import com.maijianda.cloud_library.service.UserService;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
     @Autowired
     private UserService userService;
 
